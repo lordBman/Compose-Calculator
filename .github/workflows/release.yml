@@ -48,11 +48,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload to Play Store (Internal Track)
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonRaw: ${{ secrets.PLAY_STORE_JSON_KEY }}
-          packageName: com.bsoft.compose.calculator
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
-          status: completed
+      #- name: Upload to Play Store (Internal Track)
+      #  uses: r0adkll/upload-google-play@v1
+      #  with:
+      #    serviceAccountJsonRaw: ${{ secrets.PLAY_STORE_JSON_KEY }}
+      #    packageName: com.bsoft.compose.calculator
+      #    releaseFiles: app/build/outputs/bundle/release/app-release.aab
+      #    track: internal
+      #    status: completed
