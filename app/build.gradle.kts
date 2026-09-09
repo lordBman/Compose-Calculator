@@ -7,24 +7,34 @@ plugins {
 android {
     namespace = "com.bsoft.compose.calculator"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
+        version = release(37) {
+            minorApiLevel = 0
         }
     }
 
     defaultConfig {
         applicationId = "com.bsoft.compose.calculator"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("SIGNING_STORE_FILE") ?: "keystore.jks")
+            storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
