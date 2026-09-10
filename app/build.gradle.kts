@@ -16,8 +16,15 @@ android {
         applicationId = "com.bsoft.compose.calculator"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+
+        versionCode = providers.gradleProperty("versionCode")
+            .orElse("1")
+            .get()
+            .toInt()
+
+        versionName = providers.gradleProperty("versionName")
+            .orElse("1.0.0")
+            .get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
