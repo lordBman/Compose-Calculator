@@ -95,11 +95,11 @@ jobs:
       # SIGNING
       # -----------------------------------------
 
-      #- name: Decode Keystore
-      #  env:
-      #    ENCODED_STRING: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
-      #  run: |
-      #    echo "$ENCODED_STRING" | base64 -d > app/keystore.jks
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
+        run: |
+          echo "$ENCODED_STRING" | base64 -d > app/keystore.jks
 
       # -----------------------------------------
       # BUILD
@@ -115,21 +115,6 @@ jobs:
             -PversionName=${{ steps.version.outputs.version }} \
             -PversionCode=${{ steps.version.outputs.version_code }}
 
-      - name: Sign Android APK
-        uses: r0adkll/sign-android-release@v1
-        # ID used to access action output
-        id: sign_app
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
-          alias: ${{ secrets.SIGNING_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
-          # zipAlign: true
-        env:
-          # override default build-tools version (32.0.0) -- optional
-          BUILD_TOOLS_VERSION: "34.0.0"
-
       # ==========================================
       # RENAME ARTIFACTS
       # ==========================================
@@ -140,7 +125,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           mkdir -p release
-          cp ${{steps.sign_app.outputs.signedReleaseFile}} "release/bcalculator-${VERSION}-android.apk"
+          cp "app/build/outputs/apk/release/app-release.apk" "release/bcalculator-${VERSION}-android.apk"
           echo "Release files:"
           ls -lh release
 
