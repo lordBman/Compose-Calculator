@@ -113,7 +113,7 @@ jobs:
         run: |
           ./gradlew \
             assembleRelease \
-            bundleRelease \
+      #      bundleRelease \
             -PversionName=${{ steps.version.outputs.version }} \
             -PversionCode=${{ steps.version.outputs.version_code }}
 
